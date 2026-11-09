@@ -21,6 +21,7 @@ import checkmk from "./checkmk/widget";
 import cloudflared from "./cloudflared/widget";
 import coinmarketcap from "./coinmarketcap/widget";
 import crowdsec from "./crowdsec/widget";
+import ctbrec from "./ctbrec/widget";
 import customapi from "./customapi/widget";
 import deluge from "./deluge/widget";
 import develancacheui from "./develancacheui/widget";
@@ -185,6 +186,7 @@ const widgets = {
   cloudflared,
   coinmarketcap,
   crowdsec,
+  ctbrec,
   customapi,
   deluge,
   develancacheui,
