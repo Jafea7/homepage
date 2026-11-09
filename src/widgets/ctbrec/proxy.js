@@ -3,9 +3,9 @@ import { createHmac } from "node:crypto";
 import getServiceWidget from "utils/config/service-helpers";
 import genericProxyHandler from "utils/proxy/handlers/generic";
 
-// CTBRec's remote client displays its key as a Java signed-byte array.
-// Accept that array (as YAML list or JSON string), or an already-decoded
-// ASCII key. Never silently base64-decode the key.
+// CTBRec's Settings.key is byte[]. Jackson serializes it as Base64 in JSON.
+// Decode Base64 strings to the original key bytes. Also accept legacy
+// signed-byte arrays as YAML arrays or JSON array strings.
 function keyBytes(value) {
   let parsed = value;
   if (typeof parsed === "string" && parsed.trim().startsWith("[")) {
@@ -19,7 +19,12 @@ function keyBytes(value) {
     if (!parsed.length || !parsed.every((n) => Number.isInteger(n) && n >= -128 && n <= 255)) return null;
     return Buffer.from(parsed.map((n) => n & 0xff));
   }
-  if (typeof parsed === "string" && parsed.length > 0) return Buffer.from(parsed, "utf8");
+  if (typeof parsed === "string" && parsed.length > 0) {
+    const encoded = parsed.trim();
+    if (!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(encoded)) return null;
+    const decoded = Buffer.from(encoded, "base64");
+    return decoded.length > 0 ? decoded : null;
+  }
   return null;
 }
 export default async function ctbrecProxyHandler(req, res, map) {
