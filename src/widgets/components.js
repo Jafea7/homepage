@@ -24,6 +24,7 @@ const components = {
   cloudflared: dynamic(() => import("./cloudflared/component")),
   coinmarketcap: dynamic(() => import("./coinmarketcap/component")),
   crowdsec: dynamic(() => import("./crowdsec/component")),
+  ctbrec: dynamic(() => import("./ctbrec/component")),
   iframe: dynamic(() => import("./iframe/component")),
   customapi: dynamic(() => import("./customapi/component")),
   deluge: dynamic(() => import("./deluge/component")),
