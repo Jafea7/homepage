@@ -12,10 +12,7 @@ export default function Component({ service }) {
     return <Container service={service} error={healthError ?? summaryError} />;
   }
 
-  const recordings = summary?.recordings;
-  const active = Array.isArray(recordings)
-    ? recordings.filter((recording) => recording.status === "RECORDING").length
-    : undefined;
+  const active = Array.isArray(summary?.currentlyRecording) ? summary.currentlyRecording.length : undefined;
   const recovering = health?.workload?.recoveringRecordings;
   const missed = health?.workload?.missedHlsSegmentsLastHour;
   const throughput = summary?.throughput;
