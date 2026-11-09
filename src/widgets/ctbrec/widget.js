@@ -6,12 +6,10 @@ const widget = {
   mappings: {
     health: {
       endpoint: "health",
-      method: "POST",
       body: { action: "health" },
     },
     summary: {
       endpoint: "summary",
-      method: "POST",
       body: { action: "listAll" },
     },
   },
