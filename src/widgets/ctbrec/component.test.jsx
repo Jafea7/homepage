@@ -84,7 +84,7 @@ describe("widgets/ctbrec/component", () => {
   });
 
   it("shows loading placeholders for missing data", () => {
-    mockAPI(undefined, undefined);
+    mockAPI(null, null);
     const { container } = renderWidget();
     expect(container.querySelectorAll(".service-block")).toHaveLength(4);
     expect(screen.getAllByText("-")).toHaveLength(4);
