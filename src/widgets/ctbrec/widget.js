@@ -1,3 +1,5 @@
+import { asJson } from "utils/proxy/api-helpers";
+
 import ctbrecProxyHandler from "./proxy";
 
 const widget = {
@@ -7,7 +9,10 @@ const widget = {
     health: {
       endpoint: "health",
       body: { action: "health" },
-      map: (data) => ({ ...data.health, workload: data.workload }),
+      map: (data) => {
+        const response = asJson(data);
+        return { ...response.health, workload: response.workload };
+      },
     },
     summary: {
       endpoint: "summary",
