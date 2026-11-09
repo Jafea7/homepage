@@ -81,7 +81,7 @@ export default function Component({ service }) {
   return (
     <Container service={service}>
       {fields.map((field) => (
-        <Block key={field} field={field} label={LABELS[field]} value={fieldValue(field, health, summary)} />
+        <Block key={field} field={`ctbrec.${field}`} label={LABELS[field]} value={fieldValue(field, health, summary)} />
       ))}
     </Container>
   );
