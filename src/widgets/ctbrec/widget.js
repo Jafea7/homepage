@@ -7,6 +7,7 @@ const widget = {
     health: {
       endpoint: "health",
       body: { action: "health" },
+      map: (data) => ({ ...data.health, workload: data.workload }),
     },
     summary: {
       endpoint: "summary",
