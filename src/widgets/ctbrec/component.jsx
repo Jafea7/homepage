@@ -70,7 +70,7 @@ export default function Component({ service }) {
   const { widget } = service;
   const configured = Array.isArray(widget?.fields) ? widget.fields.filter((field) => LABELS[field]) : DEFAULT_FIELDS;
   const fields = configured.length ? configured.slice(0, 4) : DEFAULT_FIELDS;
-  const needsSummary = fields.some((field) => ["processing", "paused", "bookmarked", "totalRecordings"].includes(field));
+  // Container applies its own field filter. Give it the same validated selection\n  // used for rendering, otherwise invalid configured fields hide fallback blocks.\n  const displayService = { ...service, widget: { ...widget, fields } };\n  const needsSummary = fields.some((field) => ["processing", "paused", "bookmarked", "totalRecordings"].includes(field));
   const { data: health, error: healthError } = useWidgetAPI(widget, "health");
   const { data: summary, error: summaryError } = useWidgetAPI(widget, needsSummary ? "summary" : "");
 
@@ -79,7 +79,7 @@ export default function Component({ service }) {
   }
 
   return (
-    <Container service={service}>
+    <Container service={displayService}>
       {fields.map((field) => (
         <Block key={field} field={`ctbrec.${field}`} label={LABELS[field]} value={fieldValue(field, health, summary)} />
       ))}
