@@ -70,7 +70,10 @@ export default function Component({ service }) {
   const { widget } = service;
   const configured = Array.isArray(widget?.fields) ? widget.fields.filter((field) => LABELS[field]) : DEFAULT_FIELDS;
   const fields = configured.length ? configured.slice(0, 4) : DEFAULT_FIELDS;
-  // Container applies its own field filter. Give it the same validated selection\n  // used for rendering, otherwise invalid configured fields hide fallback blocks.\n  const displayService = { ...service, widget: { ...widget, fields } };\n  const needsSummary = fields.some((field) => ["processing", "paused", "bookmarked", "totalRecordings"].includes(field));
+  // Container applies its own field filter. Give it the same validated selection
+  // used for rendering, otherwise invalid configured fields hide fallback blocks.
+  const displayService = { ...service, widget: { ...widget, fields } };
+  const needsSummary = fields.some((field) => ["processing", "paused", "bookmarked", "totalRecordings"].includes(field));
   const { data: health, error: healthError } = useWidgetAPI(widget, "health");
   const { data: summary, error: summaryError } = useWidgetAPI(widget, needsSummary ? "summary" : "");
 
