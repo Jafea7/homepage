@@ -166,6 +166,7 @@ const components = {
   vikunja: dynamic(() => import("./vikunja/component")),
   wallos: dynamic(() => import("./wallos/component")),
   watchtower: dynamic(() => import("./watchtower/component")),
+  wyl: dynamic(() => import("./wyl/component")),
   wgeasy: dynamic(() => import("./wgeasy/component")),
   whatsupdocker: dynamic(() => import("./whatsupdocker/component")),
   xteve: dynamic(() => import("./xteve/component")),
