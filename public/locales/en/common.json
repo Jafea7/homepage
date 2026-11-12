@@ -341,6 +341,13 @@
         "processing": "Processing",
         "issues": "Open Issues"
     },
+    "wyl": {
+        "total": "Total",
+        "online": "Online",
+        "offline": "Offline",
+        "unknown": "Unknown",
+        "known": "Known"
+    },
     "netalertx": {
         "total": "Total",
         "connected": "Connected",
