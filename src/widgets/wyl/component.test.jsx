@@ -21,9 +21,9 @@ describe("widgets/wyl/component", () => {
     const { container } = renderWithProviders(<Component service={service} />, {
       settings: { hideErrors: false },
     });
-    expect(container.querySelectorAll(".service-block")).toHaveLength(5);
+    expect(container.querySelectorAll(".service-block")).toHaveLength(4);
     expect(screen.getByText("wyl.total")).toBeInTheDocument();
-    expect(screen.getByText("wyl.known")).toBeInTheDocument();
+    expect(screen.getByText("wyl.unknown")).toBeInTheDocument();
   });
 
   it("renders numeric status values including zeros", () => {
@@ -39,7 +39,20 @@ describe("widgets/wyl/component", () => {
     expectBlockValue(container, "wyl.online", 15);
     expectBlockValue(container, "wyl.offline", 0);
     expectBlockValue(container, "wyl.unknown", 15);
+  });
+
+  it("supports the optional known field and configured ordering", () => {
+    useWidgetAPI.mockReturnValue({
+      data: { Total: 15, Online: 15, Offline: 0, Known: 0, Unknown: 15 },
+      error: undefined,
+    });
+    const custom = { widget: { type: "wyl", fields: ["known", "online"] } };
+    const { container } = renderWithProviders(<Component service={custom} />, {
+      settings: { hideErrors: false },
+    });
+    expect(container.querySelectorAll(".service-block")).toHaveLength(2);
     expectBlockValue(container, "wyl.known", 0);
+    expectBlockValue(container, "wyl.online", 15);
   });
 
   it("does not invent values for missing fields", () => {
