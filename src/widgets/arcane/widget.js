@@ -7,15 +7,15 @@ const widget = {
 
   mappings: {
     containers: {
-      endpoint: "environments/{env}/containers/counts",
+      endpoint: "agents/{env}/containers/counts",
       map: (data) => asJson(data).data,
     },
     images: {
-      endpoint: "environments/{env}/images/counts",
+      endpoint: "agents/{env}/images/counts",
       map: (data) => asJson(data).data,
     },
     updates: {
-      endpoint: "environments/{env}/image-updates/summary",
+      endpoint: "agents/{env}/image-updates/summary",
       map: (data) => asJson(data).data,
     },
   },
