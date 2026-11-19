@@ -9,11 +9,14 @@ services:
       COWRIE_LOG: /cowrie/var/log/cowrie/cowrie.json
       COWRIE_DB: /data/stats.sqlite3
       COWRIE_API_TOKEN: ${COWRIE_API_TOKEN:?set token in .env}
+      COWRIE_TLS_CERT: /certs/server.crt
+      COWRIE_TLS_KEY: /certs/server.key
     ports:
-      - "127.0.0.1:8765:8765"
+      - "8765:8765"
     volumes:
       - cowrie_var:/cowrie/var:ro
       - stats_data:/data
+      - ./certs:/certs:ro
 volumes:
   cowrie_var:
     external: true
