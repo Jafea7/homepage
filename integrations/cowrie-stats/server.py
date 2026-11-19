@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import hmac,json,os,sqlite3,threading
+import hmac,json,os,sqlite3,threading,ssl
 from datetime import datetime,timedelta,timezone
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
@@ -77,5 +77,13 @@ def main():
     TOKEN=os.environ.get("COWRIE_API_TOKEN","")
     if len(TOKEN)<32: raise SystemExit("COWRIE_API_TOKEN must be >=32 characters")
     STATS=Stats(os.environ.get("COWRIE_DB","/data/stats.sqlite3"),os.environ.get("COWRIE_LOG","/cowrie/var/log/cowrie/cowrie.json"))
-    ThreadingHTTPServer(("0.0.0.0",8765),Handler).serve_forever()
+    context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.minimum_version=ssl.TLSVersion.TLSv1_2
+    context.load_cert_chain(
+        certfile=os.environ.get("COWRIE_TLS_CERT","/certs/server.crt"),
+        keyfile=os.environ.get("COWRIE_TLS_KEY","/certs/server.key"),
+    )
+    server=ThreadingHTTPServer(("0.0.0.0",8765),Handler)
+    server.socket=context.wrap_socket(server.socket,server_side=True)
+    server.serve_forever()
 if __name__=="__main__": main()
