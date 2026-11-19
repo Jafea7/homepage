@@ -44,7 +44,7 @@ cowrie.example.net {
 }
 \`\`\`
 
-Replace the hostname and configure valid HTTPS certificates and DNS. Do **not** publish TCP 8765, and do not expose the API over plaintext HTTP to the Internet. Verify existing iptables INPUT rules also permit the selected HTTPS port; the managed nftables allow rule alone cannot override another INPUT DROP.
+Replace the hostname and configure valid HTTPS certificates and DNS. **Important:** because LA restricts HTTPS to Telstra/Optus, ordinary Let's Encrypt HTTP-01/TLS-ALPN-01 validation from public certificate authorities can fail. Prefer a DNS-01 challenge with a supported DNS provider or supply an existing certificate; do not assume Caddy's default issuance will work. Do **not** publish TCP 8765, and do not expose the API over plaintext HTTP to the Internet. Verify existing iptables INPUT rules also permit the selected HTTPS port; the managed nftables allow rule alone cannot override another INPUT DROP.
 
 ## Homepage (fork feature branch)
 
