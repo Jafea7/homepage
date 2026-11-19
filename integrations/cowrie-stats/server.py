@@ -58,7 +58,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if urlsplit(self.path).path!="/api/summary":
             self.send_error(404);return
-        if not hmac.compare_digest(self.headers.get("Authorization",""),"Bearer "+TOKEN):
+        if not hmac.compare_digest(self.headers.get("X-API-Key",""),TOKEN):
             self.send_error(401);return
         try:
             payload=json.dumps(STATS.summary(),separators=(",",":")).encode()
